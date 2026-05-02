@@ -1,0 +1,9 @@
+# First line lists all vertices.
+A B C D F
+
+# Edges mean the left vertex must happen before the right vertex.
+A -> B
+A -> C
+B -> D
+C -> D
+D -> F
