@@ -1,30 +1,23 @@
-# Topological Sorting using Java and SML
+# Topological Sorting Using Java and SML
 
-This project solves topological sorting for a directed graph in both Java and SML.
+This project solves topological sorting for directed graphs in both Java and Standard ML.
 
-The program prints exactly one of the following:
+Each program prints exactly one result:
 
-```text
-Topological order: A -> C -> B -> D
-```
-
-or
-
-```text
-Cycle detected: B -> D -> F -> B
-```
+- `Topological order: ...` for acyclic graphs.
+- `Cycle detected: ...` for cyclic graphs.
 
 ## Input Format
 
-Because the assignment did not specify an input format, this project uses a simple text format:
+The parser accepts a simple text format:
 
-1. The first non-empty line contains all vertices separated by spaces or commas.
-2. Each remaining non-empty line contains one directed edge.
-3. Edge formats supported:
+1. The first non-empty line lists vertices (space or comma separated).
+2. Remaining non-empty lines list directed edges.
+3. Supported edge formats:
    - `A -> B`
    - `A B`
    - `A,B`
-4. `#` can be used for comments.
+4. `#` starts a comment (full-line or inline).
 
 Example:
 
@@ -36,46 +29,80 @@ B -> D
 C -> D
 ```
 
-## Java Version
+## Quick Start
 
-Go into the Java folder:
+From the repository root:
+
+### Windows (PowerShell)
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\test.ps1
+```
+
+### macOS/Linux
 
 ```bash
-cd java
+chmod +x ./test.sh
+./test.sh
+```
+
+The test scripts compile and validate Java on acyclic/cyclic samples, and run SML tests when `sml` is available on `PATH`.
+
+## Manual Run
+
+### Java
+
+```bash
+cd topological_sorting_project/java
 javac *.java
 java Main < ../samples/acyclic.txt
 java Main < ../samples/cyclic.txt
 ```
 
-## SML Version
-
-With SML/NJ installed, run from the main project folder:
+### SML
 
 ```bash
+cd topological_sorting_project
 sml sml/TopoSort.sml < samples/acyclic.txt
 sml sml/TopoSort.sml < samples/cyclic.txt
 ```
 
-## Files
+## File Layout
 
 ```text
-java/Graph.java
-java/InputParser.java
-java/Main.java
-java/TopoSorter.java
-java/TopoSortResult.java
-sml/TopoSort.sml
-samples/acyclic.txt
-samples/cyclic.txt
-report/Topological_Sorting_Report.docx
+Topological_Sorting_Report.md
+topological_sorting_project/
+|- java/
+|  |- Graph.java
+|  |- InputParser.java
+|  |- Main.java
+|  |- TopoSorter.java
+|  `- TopoSortResult.java
+|- sml/
+|  `- TopoSort.sml
+`- samples/
+   |- acyclic.txt
+   `- cyclic.txt
 ```
 
-## Algorithm
+## Design Comparison
 
-Both implementations use depth-first search with three states:
+Based on the assignment details:
 
-- White / unvisited: vertex has not been explored yet.
-- Gray / visiting: vertex is currently on the recursion path.
-- Black / visited: vertex and all of its outgoing edges are finished.
+- Data representation:
+  - Java uses a `Graph` class with `LinkedHashMap<String, List<String>>`.
+  - SML uses `(vertices, edges)` data passed through functions.
+- Control flow:
+  - Java uses object-oriented DFS with mutable state maps/lists.
+  - SML uses recursive functions and pattern matching.
+- Organization:
+  - Java separates concerns across classes (`Graph`, parser, sorter, result, `Main`).
+  - SML keeps the same logic in composable functions inside one file.
 
-If DFS reaches a gray vertex, a cycle exists. If no cycle is found, vertices are added to the front of the order when DFS finishes them, producing a valid topological order.
+## AI Usage Disclosure
+
+AI assistance (ChatGPT) was used during development for clarifying requirements, structuring Java classes, and shaping the equivalent SML implementation. The final code and documentation were reviewed and adjusted to satisfy assignment expectations, including:
+
+- clear algorithm separation from Java I/O,
+- cycle detection + topological ordering behavior,
+- consistent output contract (`Topological order` or `Cycle detected`).
