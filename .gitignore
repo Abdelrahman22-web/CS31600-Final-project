@@ -1,0 +1,23 @@
+# Java compiled files
+*.class
+*.jar
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# SML files
+*.ui
+*.uo
+
+# Build artifacts
+/build/
+/dist/
+*.o
