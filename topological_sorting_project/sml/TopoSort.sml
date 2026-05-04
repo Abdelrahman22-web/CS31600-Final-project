@@ -7,6 +7,7 @@
  * Lines beginning with #, or text after #, are treated as comments.
  *)
 
+
 datatype color = White | Gray | Black;
 datatype topo_result = TopologicalOrder of string list | CycleDetected of string list;
 
